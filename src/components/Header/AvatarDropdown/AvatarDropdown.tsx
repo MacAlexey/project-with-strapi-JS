@@ -52,8 +52,10 @@ export default function AvatarDropdown() {
                       <Avatar imgUrl={avatarImgs[7]} sizeClass="w-12 h-12" />
 
                       <div className="flex-grow">
-                        <h4 className="font-semibold">Eden Smith</h4>
-                        <p className="text-xs mt-0.5">Los Angeles, CA</p>
+                        <h4 className="font-semibold">Name #change</h4>
+                        <p className="text-xs mt-0.5">
+                          Current Location #change
+                        </p>
                       </div>
                     </div>
 

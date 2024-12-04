@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import Logo from "components/Logo/Logo";
 import MenuBar from "components/MenuBar/MenuBar";
 import LangDropdown from "./LangDropdown";
-import AvatarDropdown from "./AvatarDropdown";
+import AvatarDropdown from "./AvatarDropdown/MyAvatarDropDown";
 import TemplatesDropdown from "./TemplatesDropdown";
 import NotifyDropdown from "./NotifyDropdown";
 import SwitchDarkMode from "../SwitchDarkMode/SwitchDarkMode";

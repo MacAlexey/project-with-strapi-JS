@@ -32,6 +32,13 @@ const MainNav1: FC<MainNav1Props> = () => {
                 href="/login"
                 pattern="primary"
               >
+                Sign in
+              </Button>
+              <Button
+                sizeClass="py-3 px-4 sm:px-6 m-2"
+                href="/signUp"
+                pattern="primary"
+              >
                 Sign up
               </Button>
             </div>

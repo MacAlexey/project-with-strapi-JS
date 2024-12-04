@@ -19,19 +19,19 @@ import PageSearchV2 from "app/(search)/search-2/page";
 import PageAbout from "app/about/page";
 import PageContact from "app/(others)/contact/page";
 import Page404 from "app/not-found";
-import PageLogin from "app/(others)/login/page";
-import PageSignUp from "app/(others)/signup/page";
+import PageLogin from "app/(others)/login/MyLogIn/page";
+import PageSignUp from "app/(others)/signup/MySingUp/page";
 import PageForgotPass from "app/(others)/forgot-pass/page";
 import PageSubcription from "app/(others)/subscription/page";
 import PageHomeDemo2 from "app/(home)/home-2/page";
 import PageHomeDemo3 from "app/(home)/home-3/page";
 import PageHomeDemo4 from "app/(home)/home-4/page";
 import PageHomeDemo6 from "app/(home)/home-6/page";
-import SiteHeader from "app/SiteHeader";
+import SiteHeader from "app/SiteHeader/MySiteHeader/MySiteHeader";
 import PageSingleTemplate4 from "app/(singles)/(has-sidebar)/single-4/page";
 import DashboardSubmitPost from "app/(others)/dashboard/submit-post/page";
 import DashboardPosts from "app/(others)/dashboard/posts/page";
-import DashboardEditProfile from "app/(others)/dashboard/edit-profile/page";
+import DashboardEditProfile from "app/(others)/dashboard/edit-profile2/page";
 import DashboardSubcription from "app/(others)/dashboard/subscription/page";
 import DashboardBilingAddress from "app/(others)/dashboard/billing-address/page";
 
@@ -39,17 +39,24 @@ import DashboardBilingAddress from "app/(others)/dashboard/billing-address/page"
 import ArticlePage from "app/MyArticlePage/articlePage/page";
 import MyAuthorPage from "app/MyAuthor/page";
 import CategoryPage from "app/(archives)/MyCategory/page";
+import { AuthProvider } from "app/authContext/authContextProps";
+import ProtectedRoute from "app/authContext/protectedRoute";
+import PublicRoute from "app/authContext/publicRoute";
 
 export const pages: Page[] = [
   //My routers
   { path: "/article-1/*", component: ArticlePage },
   { path: "/author-1/*", component: MyAuthorPage },
   { path: "/category/*", component: CategoryPage },
+  { path: "/login", component: PageLogin },
+  { path: "/signup", component: PageSignUp },
+
+  { path: "/author-1", component: MyAuthorPage, protected: true },
 
   { path: "/", component: PageHome },
   { path: "/", component: PageHome },
   { path: "/home-2", component: PageHomeDemo2 },
-  { path: "/home-3", component: PageHomeDemo3 },
+  { path: "/home-3", component: PageHomeDemo3 }, //page for not authorized users
   { path: "/home-4", component: PageHomeDemo4 },
   { path: "/home-6", component: PageHomeDemo6 },
 
@@ -77,8 +84,8 @@ export const pages: Page[] = [
   { path: "/about", component: PageAbout },
   { path: "/contact", component: PageContact },
   { path: "/page404", component: Page404 },
-  { path: "/login", component: PageLogin },
-  { path: "/signup", component: PageSignUp },
+  // { path: "/login", component: PageLogin },
+  // { path: "/singup", component: PageSignUp },
   { path: "/forgot-pass", component: PageForgotPass },
   { path: "/subscription", component: PageSubcription },
   { path: "/dashboard", component: DashboardSubmitPost },
@@ -91,19 +98,51 @@ export const pages: Page[] = [
 
 const MyRoutes = () => {
   return (
-    <BrowserRouter>
-      <SiteHeader />
+    <AuthProvider>
+      <BrowserRouter>
+        <SiteHeader />
 
-      <Routes>
-        {pages.map(({ component: Component, path }, index) => {
-          return <Route key={index} element={<Component />} path={path} />;
-        })}
-        <Route element={<Page404 />} />
-      </Routes>
+        <Routes>
+          {pages.map(
+            ({ component: Component, path, protected: isProtected }, index) => {
+              if (isProtected) {
+                return (
+                  <Route
+                    key={index}
+                    path={path}
+                    element={
+                      <ProtectedRoute>
+                        <Component />
+                      </ProtectedRoute>
+                    }
+                  />
+                );
+              }
 
-      <Footer />
-      <MusicPlayer />
-    </BrowserRouter>
+              if (path === "/login" || path === "/signup") {
+                return (
+                  <Route
+                    key={index}
+                    path={path}
+                    element={
+                      <PublicRoute>
+                        <Component />
+                      </PublicRoute>
+                    }
+                  />
+                );
+              }
+
+              return <Route key={index} element={<Component />} path={path} />;
+            }
+          )}
+          <Route element={<Page404 />} />
+        </Routes>
+
+        <Footer />
+        <MusicPlayer />
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 

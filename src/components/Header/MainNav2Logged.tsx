@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import Logo from "components/Logo/Logo";
 import MenuBar from "components/MenuBar/MenuBar";
-import AvatarDropdown from "./AvatarDropdown";
+import AvatarDropdown from "./AvatarDropdown/MyAvatarDropDown";
 import Navigation from "components/Navigation/Navigation";
 import SearchModal from "./SearchModal";
 import NotifyDropdown from "./NotifyDropdown";

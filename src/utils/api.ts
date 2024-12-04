@@ -13,7 +13,9 @@
 //   }
 // };
 
-const API_BASE_URL = `${process.env.REACT_APP_STRAPI_HOST_URL}/api`;
+import { API } from "../constants";
+
+const API_BASE_URL = `${API}`;
 
 export const fetchPostsByCategorySlug = async (
   nameSlug: string,
@@ -24,5 +26,3 @@ export const fetchPostsByCategorySlug = async (
   const data = await response.json();
   return data;
 };
-
-//  /articles?
