@@ -24,51 +24,30 @@ import SectionVideos from "components/Sections/SectionVideos";
 import SectionLatestPosts from "components/Sections/SectionLatestPosts";
 import SectionMagazine2 from "components/Sections/SectionMagazine2";
 import { fetchPostsByCategorySlug } from "utils/api";
-import { TaxonomyType } from "data/types";
+import { PostDataType, TaxonomyType } from "data/types";
 import qs from "qs";
+import { fetchCategories } from "./Sections/FetchCategories";
+import { fetchArticle } from "./Sections/FetchArticle";
 
 //
+//потом удалить
+const POSTS = DEMO_POSTS;
 const MAGAZINE1_POSTS = DEMO_POSTS.filter((_, i) => i >= 8 && i < 16);
 const MAGAZINE2_POSTS = DEMO_POSTS.filter((_, i) => i >= 0 && i < 7);
 //
 
 const PageHome = () => {
   const [categories, setCategories] = useState<TaxonomyType[]>([]);
+  const [posts, setPosts] = useState<PostDataType[]>([]);
 
   useEffect(() => {
-    const fetchHomePage = async () => {
-      try {
-        const query = qs.stringify(
-          {
-            populate: {
-              cover_image: { fields: ["url"] },
-              articles: "*",
-            },
-          },
-          { encodeValuesOnly: true }
-        );
-
-        const response = await fetchPostsByCategorySlug("/categories?", query);
-        const updatedCategories = response.data
-          .map((cat: any) => ({
-            ...cat,
-            href: `/category/${cat.slug}`,
-            thumbnail: `${process.env.REACT_APP_STRAPI_HOST_URL}${cat.cover_image?.url}`,
-            count: cat.articles?.length || 0,
-          }))
-          //sort categories
-          .sort(
-            (a: TaxonomyType, b: TaxonomyType) =>
-              (b.count ?? 0) - (a.count ?? 0)
-          );
-
-        const limitedPosts = updatedCategories.slice(0, 8);
-        setCategories(limitedPosts);
-      } catch (error) {
-        console.error("Error when load categories in Home Page:", error);
-      }
+    const fetchData = async () => {
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
+      const fetchedArticles = await fetchArticle();
+      setPosts(fetchedArticles);
     };
-    fetchHomePage();
+    fetchData();
   }, []);
 
   return (
@@ -94,6 +73,14 @@ const PageHome = () => {
           subHeading={`Discover ${categories.length} topics`}
           categories={categories}
           categoryCardType="card4"
+        />
+
+        <SectionSliderPosts
+          className="py-16 lg:py-28"
+          postCardName="card11"
+          heading="New posts. Click and enjoy"
+          subHeading={`${posts.length} posts`}
+          posts={posts}
         />
 
         <div className="relative py-16">

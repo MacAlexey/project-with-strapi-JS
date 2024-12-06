@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import NcImage from "components/NcImage/NcImage";
 import SingleHeader from "app/(singles)/SingleHeaders/MySingleHeader";
-import Layout from "../../(singles)/layouts/myLayout";
+import Layout from "../(singles)/layouts/myLayout";
 import { useLocation } from "react-router-dom";
 import { fetchPostsByCategorySlug } from "utils/api";
 import { PostDataType } from "data/types";
 import qs from "qs";
+import { API, LOCALHOST } from "../../constants";
 
 const ArticlePage = () => {
   const [article, setArticle] = useState<PostDataType | undefined>();
@@ -47,13 +48,11 @@ const ArticlePage = () => {
             author: {
               ...article?.author,
               avatar: article?.author?.avatar?.url
-                ? process.env.REACT_APP_STRAPI_HOST_URL +
-                  article.author.avatar.url
+                ? LOCALHOST + article.author.avatar.url
                 : "",
             },
             featuredImage: article?.featuredImage?.url
-              ? process.env.REACT_APP_STRAPI_HOST_URL +
-                article.featuredImage.url
+              ? LOCALHOST + article.featuredImage.url
               : "",
             categories: article?.categories?.map((cat: any) => ({
               ...cat,

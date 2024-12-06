@@ -30,11 +30,10 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
           }`
         : (author.avatar as { url: string }).url
       : typeof author.avatar === "string" &&
-        author.avatar.startsWith("/uploads")
-      ? `${process.env.REACT_APP_STRAPI_HOST_URL}${author.avatar}`
-      : "no image here"; //default image
+          author.avatar.startsWith("/uploads")
+        ? `${process.env.REACT_APP_STRAPI_HOST_URL}${author.avatar}`
+        : "no image here"; //default image
 
-  // console.log(avatarUrl);
   return (
     <div
       className={`nc-PostCardMeta inline-flex items-center flex-wrap text-neutral-800 dark:text-neutral-200 ${className}`}

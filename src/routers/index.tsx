@@ -36,9 +36,9 @@ import DashboardSubcription from "app/(others)/dashboard/subscription/page";
 import DashboardBilingAddress from "app/(others)/dashboard/billing-address/page";
 
 //mine
-import ArticlePage from "app/MyArticlePage/articlePage/page";
+import ArticlePage from "app/MyArticlePage/page";
 import MyAuthorPage from "app/MyAuthor/page";
-import CategoryPage from "app/(archives)/MyCategory/page";
+import CategoryPage from "app/(archives)/MyCategory(archive)/page";
 import { AuthProvider } from "app/authContext/authContextProps";
 import ProtectedRoute from "app/authContext/protectedRoute";
 import PublicRoute from "app/authContext/publicRoute";
@@ -50,10 +50,10 @@ export const pages: Page[] = [
   { path: "/category/*", component: CategoryPage },
   { path: "/login", component: PageLogin },
   { path: "/signup", component: PageSignUp },
+  { path: "/", component: PageHome },
 
   { path: "/author-1", component: MyAuthorPage, protected: true },
 
-  { path: "/", component: PageHome },
   { path: "/", component: PageHome },
   { path: "/home-2", component: PageHomeDemo2 },
   { path: "/home-3", component: PageHomeDemo3 }, //page for not authorized users

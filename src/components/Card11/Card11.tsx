@@ -24,6 +24,7 @@ const Card11: FC<Card11Props> = ({
 
   const [isHover, setIsHover] = useState(false);
 
+  console.log(post);
   return (
     <div
       className={`nc-Card11 relative flex flex-col group rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 ${className}`}

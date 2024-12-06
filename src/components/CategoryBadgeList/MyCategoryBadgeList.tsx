@@ -23,9 +23,7 @@ const CategoryBadgeList: FC<CategoryBadgeListProps> = ({
           className={itemClass}
           key={index}
           name={item.name}
-          href={
-            item.href || ""
-          } /*href={item.slug === "category" ? `/${item.slug}` : item.slug}s */
+          href={item.href || ""}
           color={item.color as any}
         />
       ))}
