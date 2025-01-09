@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { fetchPostsByCategorySlug } from "utils/api";
 import { TaxonomyType } from "data/types";
 import qs from "qs";
-import { LOCALHOST } from "../../../../../constants";
+import { LOCALHOST } from "../constants";
+import { fetchApi } from "../api/MainApiFetch";
 
-/////пока не использую. Для того чтобы сделать код чище, поделив код для загрузки данных в другой файл
 export const fetchCategories = async (): Promise<TaxonomyType[]> => {
   try {
     const query = qs.stringify(
@@ -17,7 +15,7 @@ export const fetchCategories = async (): Promise<TaxonomyType[]> => {
       { encodeValuesOnly: true }
     );
 
-    const response = await fetchPostsByCategorySlug("/categories?", query);
+    const response = await fetchApi("/categories?", query);
 
     const updatedCategories = response.data
       .map((cat: any) => ({

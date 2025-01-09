@@ -10,7 +10,7 @@ import PostCardCommentBtn from "components/PostCardCommentBtn/PostCardCommentBtn
 import { ArrowUpIcon } from "@heroicons/react/24/solid";
 import { PostDataType, TaxonomyType } from "data/types";
 import qs from "qs";
-import { fetchPostsByCategorySlug } from "utils/api";
+import { fetchApi } from "api/MainApiFetch";
 
 export interface SingleContentProps {
   article?: PostDataType;
@@ -33,7 +33,7 @@ const SingleContent: FC<SingleContentProps> = ({ article }) => {
       try {
         const query = qs.stringify({}, { encodeValuesOnly: true });
 
-        const response = await fetchPostsByCategorySlug("/categories?", query);
+        const response = await fetchApi("/categories?", query);
 
         const updatedCategories = response.data.map((cat: any) => ({
           ...cat,

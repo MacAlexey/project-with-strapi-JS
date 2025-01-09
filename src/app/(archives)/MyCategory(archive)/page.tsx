@@ -14,7 +14,7 @@ import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionGridCategoryBox from "components/SectionGridCategoryBox/SectionGridCategoryBox";
 import ButtonSecondary from "components/Button/ButtonSecondary";
 import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSliderNewAuthors";
-import { fetchPostsByCategorySlug } from "utils/api";
+import { fetchApi } from "api/MainApiFetch";
 import qs from "qs";
 import Image from "components/Image/Image";
 
@@ -79,7 +79,7 @@ const PageSportsCategory = () => {
           { encodeValuesOnly: true }
         );
 
-        const response = await fetchPostsByCategorySlug("/articles?", query);
+        const response = await fetchApi("/articles?", query);
 
         const articleUpdate = response.data.map((article: any) => {
           const updatedCategories = article.categories.map((cat: any) => ({

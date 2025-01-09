@@ -27,7 +27,7 @@ const SingleHeader: FC<SingleHeaderProps> = ({
           <CategoryBadgeList itemClass="!px-3" categories={categories || []} />
           <SingleTitle
             mainClass={titleMainClass}
-            title={title || "deafault title"}
+            title={title || "some other title"}
           />
           {!hiddenDesc && (
             <span className="block text-base text-neutral-500 md:text-lg dark:text-neutral-400 pb-1">

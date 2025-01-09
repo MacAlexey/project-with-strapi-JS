@@ -3,10 +3,11 @@ import NcImage from "components/NcImage/NcImage";
 import SingleHeader from "app/(singles)/SingleHeaders/MySingleHeader";
 import Layout from "../(singles)/layouts/myLayout";
 import { useLocation } from "react-router-dom";
-import { fetchPostsByCategorySlug } from "utils/api";
 import { PostDataType } from "data/types";
 import qs from "qs";
-import { API, LOCALHOST } from "../../constants";
+import { LOCALHOST } from "../../constants";
+
+import { fetchApi } from "api/MainApiFetch";
 
 const ArticlePage = () => {
   const [article, setArticle] = useState<PostDataType | undefined>();
@@ -37,7 +38,7 @@ const ArticlePage = () => {
           },
         });
 
-        const response = await fetchPostsByCategorySlug("/articles?", query);
+        const response = await fetchApi("/articles?", query);
 
         const article = response?.data?.[0];
 

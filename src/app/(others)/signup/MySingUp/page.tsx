@@ -45,9 +45,19 @@ const SignUp: React.FC = () => {
 
   const onFinish = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
+    const passwordRegex = /^(?=.*[A-Z]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError(
+        "The password must be at least 8 characters long and contain at least one capital letter."
+      );
+      return;
+    }
+
     const values = { username, email, password, firstName, lastName };
     setIsLoading(true);
-    // console.log(JSON.stringify(values));
+
     try {
       const response = await fetch(`${API}/auth/local/register`, {
         method: "POST",

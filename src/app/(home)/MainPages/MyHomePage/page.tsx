@@ -23,11 +23,12 @@ import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import SectionVideos from "components/Sections/SectionVideos";
 import SectionLatestPosts from "components/Sections/SectionLatestPosts";
 import SectionMagazine2 from "components/Sections/SectionMagazine2";
-import { fetchPostsByCategorySlug } from "utils/api";
 import { PostDataType, TaxonomyType } from "data/types";
-import qs from "qs";
-import { fetchCategories } from "./Sections/FetchCategories";
-import { fetchArticle } from "./Sections/FetchArticle";
+// import { fetchCategories } from "./Sections/FetchCategories";
+// import { fetchArticle } from "./Sections/FetchArticle";
+
+import { fetchCategories } from "../../../../api/CategoriesApi";
+import { fetchArticle } from "../../../../api/ArticlesApi";
 
 //
 //потом удалить

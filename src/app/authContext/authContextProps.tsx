@@ -39,7 +39,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<UserType | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false); //to display the loading status while actions are being performed (e.g. login, data request).
-  const [isInitialized, setIsInitialized] = useState(false); //to track the completion of token verification when the application starts. отслеживает завершения проверки токена
+  const [isInitialized, setIsInitialized] = useState(true); //isInitialized используется для предотвращения отображения интерфейса до завершения проверки токена
+
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      fetchLoggedInUser(token).finally(() => setIsInitialized(false));
+    } else {
+      setIsInitialized(false);
+    }
+  }, []);
 
   const fetchLoggedInUser = async (token: string) => {
     setIsLoading(true);
@@ -70,17 +79,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUser(undefined);
   };
 
-  useEffect(() => {
-    const token = getToken();
-    if (token) {
-      fetchLoggedInUser(token).finally(() => setIsInitialized(true));
-    } else {
-      setIsInitialized(true);
-    }
-  }, []);
-
-  //can add Loading Sticker or something
-  if (!isInitialized) {
+  // can add Loading Sticker, Icon etc.
+  // без этого при обновлении сайта будет выскакивать не залоггированный хидер
+  if (isInitialized) {
     return <div></div>;
   }
 

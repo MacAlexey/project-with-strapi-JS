@@ -1,8 +1,7 @@
-import { avatarImgs } from "contains/fakeData";
-import { LOCALHOST } from "../../../../../constants";
+import { LOCALHOST } from "../constants";
 import { PostDataType } from "data/types";
 import qs from "qs";
-import { fetchPostsByCategorySlug } from "utils/api";
+import { fetchApi } from "../api/MainApiFetch";
 
 export const fetchArticle = async (): Promise<PostDataType[]> => {
   try {
@@ -25,7 +24,7 @@ export const fetchArticle = async (): Promise<PostDataType[]> => {
       { encodeValuesOnly: true }
     );
 
-    const response = await fetchPostsByCategorySlug("/articles?", query);
+    const response = await fetchApi("/articles?", query);
 
     const articleUpdate = response.data.map((article: any) => {
       const updatedCategory = article.categories.map((cat: any) => ({

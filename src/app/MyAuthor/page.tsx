@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { DEMO_POSTS } from "data/posts";
 import { PostAuthorFlexible, PostDataType } from "data/types";
 import Pagination from "components/Pagination/Pagination";
 import ButtonPrimary from "components/Button/ButtonPrimary";
@@ -24,7 +23,7 @@ import { SOCIALS_DATA } from "components/SocialsShare/SocialsShare";
 import AccountActionDropdown from "components/AccountActionDropdown/AccountActionDropdown";
 import Image from "components/Image/Image";
 import { useLocation } from "react-router-dom";
-import { fetchPostsByCategorySlug } from "utils/api";
+import { fetchApi } from "api/MainApiFetch";
 import qs from "qs";
 
 const TABS = ["Articles", "Favorites", "Saved"];
@@ -83,7 +82,7 @@ const PageAuthorMacAlex = () => {
           },
         });
 
-        const response = await fetchPostsByCategorySlug("/authors?", query);
+        const response = await fetchApi("/authors?", query);
 
         // update author's data
         const authorData = response.data[0];
