@@ -17,6 +17,11 @@ import SectionSliderNewAuthors from "components/SectionSliderNewAthors/SectionSl
 import { fetchApi } from "api/MainApiFetch";
 import qs from "qs";
 import Image from "components/Image/Image";
+import {
+  LOCALHOST,
+  DEFAULT_CATEGORY_NAME,
+  DEFAULT_PHOTO,
+} from "../../../constants";
 
 const FILTERS = [
   { name: "Most Recent" },
@@ -28,11 +33,11 @@ const FILTERS = [
 
 const PageSportsCategory = () => {
   const [posts, setPosts] = useState<PostDataType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   let location = useLocation();
 
   useEffect(() => {
-    // Загрузка данных с API
     const fetchPosts = async () => {
       try {
         //recieve last segment of url
@@ -85,13 +90,30 @@ const PageSportsCategory = () => {
           const updatedCategories = article.categories.map((cat: any) => ({
             ...cat,
             href: `/category/${cat.slug}`,
-            thumbnail: `${process.env.REACT_APP_STRAPI_HOST_URL}${cat.cover_image?.url}`,
+            thumbnail: cat.cover_image?.url
+              ? `${process.env.REACT_APP_STRAPI_HOST_URL}${cat.cover_image?.url}`
+              : undefined,
           }));
+          const updatedAuthor = article.author
+            ? {
+                firstName: article.author.firstName,
+                lastName: article.author.lastName,
+                displayName: article.author.displayName,
+                avatar: article.author.avatar
+                  ? `${LOCALHOST}${article.author.avatar.url}`
+                  : undefined,
+                href: `/author-1/${article.author.slug}`,
+              }
+            : null;
 
           return {
             ...article,
+            author: updatedAuthor,
             categories: updatedCategories,
             href: `/article-1/${article.slug}`,
+            featuredImage: article.featuredImage?.url
+              ? `${process.env.REACT_APP_STRAPI_HOST_URL}${article.featuredImage?.url}`
+              : undefined,
           };
         });
 
@@ -99,6 +121,8 @@ const PageSportsCategory = () => {
         setPosts(limitedPosts);
       } catch (error) {
         console.error("Error when load posts:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -110,12 +134,23 @@ const PageSportsCategory = () => {
       {/* HEADER */}
       <div className="w-full px-2 xl:max-w-screen-2xl mx-auto">
         <div className="relative aspect-w-16 aspect-h-13 sm:aspect-h-9 lg:aspect-h-8 xl:aspect-h-5 rounded-3xl md:rounded-[40px] overflow-hidden z-0">
-          <Image src={posts[0]?.categories[0]?.thumbnail} />
+          {posts.length > 0 && (
+            <Image src={posts[0]?.categories[0]?.thumbnail ?? DEFAULT_PHOTO} />
+          )}
 
           <div className="absolute inset-0 bg-black text-white bg-opacity-30 flex flex-col items-center justify-center">
+            {/* {posts && posts[0]?.categories[0]?.name && (
             <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl ">
-              {posts[0]?.categories[0]?.name}
+              {posts[0]?.categories[0]?.name ?? DEFAULT_CATEGORY_NAME}
             </h2>
+             )} */}
+
+            {posts[0]?.categories[0]?.name !== undefined ? (
+              <h2 className="inline-block align-middle text-5xl font-semibold md:text-7xl">
+                {posts[0]?.categories[0]?.name ?? DEFAULT_CATEGORY_NAME}
+              </h2>
+            ) : undefined}
+
             <span className="block mt-4 text-neutral-300">
               {posts.length} {posts.length === 1 ? "Article" : "Articles"}
             </span>

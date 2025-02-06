@@ -24,32 +24,26 @@ const Avatar: FC<AvatarProps> = ({
   userName,
 }) => {
   const name = userName || "John Doe";
-
-  const [url, setUrl] = useState(imgUrl);
-
-  useEffect(() => {
-    // FOR DEMO
-    if (!url) {
-      setUrl(_getAvatarRd());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const defaultAvatar =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ68D1zB62HiAWZAkQpessCgGpmfvJQUX8Rhg&s";
+  const avatarUrl = imgUrl || defaultAvatar;
 
   return (
     <div
       className={`wil-avatar relative flex-shrink-0 inline-flex items-center justify-center overflow-hidden text-neutral-100 uppercase font-semibold shadow-inner ${radius} ${sizeClass} ${containerClassName}`}
-      style={{ backgroundColor: url ? undefined : _setBgColor(name) }}
+      style={{ backgroundColor: avatarUrl ? undefined : _setBgColor(name) }}
     >
-      {url && (
+      {avatarUrl ? (
         <Image
           fill
           sizes="100px"
           className="absolute inset-0 w-full h-full object-cover"
-          src={url}
+          src={avatarUrl}
           alt={name}
         />
+      ) : (
+        <span className="wil-avatar__name">{name[0]}</span>
       )}
-      <span className="wil-avatar__name">{name[0]}</span>
     </div>
   );
 };

@@ -40,6 +40,8 @@ export interface PostAuthorType {
   desc: string;
   jobName: string;
   href: Route;
+  description?: string;
+  slug?: Route | string;
 }
 
 //mine
@@ -55,6 +57,7 @@ export interface PostDataType {
   author: PostAuthorFlexible; //изменил PostAuthorType на PostAuthorFlexible
   date: string;
   href: Route;
+  description?: string; //mine
   slug?: Route | string; //mine
   categories: TaxonomyTypeFlexible[]; //здесь будет менятся
   title: string;

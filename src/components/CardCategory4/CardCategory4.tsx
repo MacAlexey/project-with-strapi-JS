@@ -3,6 +3,7 @@ import { TaxonomyType, TwMainColor } from "data/types";
 import Badge from "components/Badge/Badge";
 import Link from "components/Link";
 import Image from "components/Image/Image";
+import { DEFAULT_CATEGORY_NAME, DEFAULT_PHOTO } from "../../constants";
 
 export interface CardCategory4Props {
   className?: string;
@@ -39,14 +40,13 @@ const CardCategory4: FC<CardCategory4Props> = ({
         return "bg-pink-500";
     }
   };
-
   return (
     <Link href={href} className={`nc-CardCategory4 flex flex-col ${className}`}>
       <div className="flex-shrink-0 relative w-full aspect-w-7 aspect-h-5 h-0 rounded-3xl overflow-hidden group">
         <Image
           alt="taxonomies"
           fill
-          src={thumbnail || ""}
+          src={thumbnail || DEFAULT_PHOTO}
           className="object-cover w-full h-full rounded-2xl"
           sizes="(min-width: 1024px) 20rem, (min-width: 640px) 16rem, 12rem"
         />
@@ -66,7 +66,7 @@ const CardCategory4: FC<CardCategory4Props> = ({
         <div className={`w-9 h-9 ${getColorClass()} rounded-full`}></div>
         <div className="ml-4">
           <h2 className="text-base text-neutral-900 dark:text-neutral-100 font-medium">
-            {name}
+            {name || DEFAULT_CATEGORY_NAME}
           </h2>
           <span className="block text-sm text-neutral-500 dark:text-neutral-400">
             {count} Articles

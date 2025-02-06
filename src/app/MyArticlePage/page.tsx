@@ -5,7 +5,7 @@ import Layout from "../(singles)/layouts/myLayout";
 import { useLocation } from "react-router-dom";
 import { PostDataType } from "data/types";
 import qs from "qs";
-import { LOCALHOST } from "../../constants";
+import { DEFAULT_PHOTO, LOCALHOST } from "../../constants";
 
 import { fetchApi } from "api/MainApiFetch";
 
@@ -49,12 +49,13 @@ const ArticlePage = () => {
             author: {
               ...article?.author,
               avatar: article?.author?.avatar?.url
-                ? LOCALHOST + article.author.avatar.url
-                : "",
+                ? `${LOCALHOST}${article.author.avatar?.url}`
+                : undefined,
             },
+
             featuredImage: article?.featuredImage?.url
               ? LOCALHOST + article.featuredImage.url
-              : "",
+              : undefined,
             categories: article?.categories?.map((cat: any) => ({
               ...cat,
               href: `/category/${cat.slug}`,
@@ -71,6 +72,8 @@ const ArticlePage = () => {
     fetchArticles();
   }, [location.pathname]);
 
+  console.log(article);
+
   return (
     <Layout article={article}>
       <div className={`nc-PageSingle pt-8 lg:pt-16`}>
@@ -81,12 +84,12 @@ const ArticlePage = () => {
         </header>
 
         {/* FEATURED IMAGE */}
-        {article && article?.featuredImage !== "" && (
+        {article && (
           <NcImage
             alt="single"
             containerClassName="container my-10 sm:my-12"
             className="w-full rounded-xl"
-            src={article?.featuredImage}
+            src={article?.featuredImage ?? DEFAULT_PHOTO}
             width={1260}
             height={750}
             sizes="(max-width: 1024px) 100vw, 1280px"

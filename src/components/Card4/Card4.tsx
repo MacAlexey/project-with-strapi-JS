@@ -5,6 +5,7 @@ import CardAuthor2 from "components/CardAuthor2/CardAuthor2";
 import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
 import Image from "components/Image/Image";
 import Link from "components/Link";
+import { DEFAULT_PHOTO } from "../../constants";
 
 export interface Card4Props {
   className?: string;
@@ -25,7 +26,7 @@ const Card4: FC<Card4Props> = ({ className = "h-full", post }) => {
           className="object-cover"
           alt=""
           sizes="(max-width: 600px) 480px, 800px"
-          src={featuredImage}
+          src={featuredImage || DEFAULT_PHOTO}
         />
       </span>
 

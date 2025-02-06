@@ -1,11 +1,9 @@
 import React, { FC, useState } from "react";
 import PostCardSaveAction from "components/PostCardSaveAction/PostCardSaveAction";
-import { PostDataType, TaxonomyTypeFlexible } from "data/types";
-// import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
-import CategoryBadgeList from "components/CategoryBadgeList/MyCategoryBadgeList";
+import { PostDataType } from "data/types";
+import CategoryBadgeList from "components/CategoryBadgeList/CategoryBadgeList";
 import PostCardLikeAndComment from "components/PostCardLikeAndComment/PostCardLikeAndComment";
-// import PostCardMeta from "components/PostCardMeta/PostCardMeta";
-import PostCardMeta from "components/PostCardMeta/MyPostCardMeta";
+import PostCardMeta from "components/PostCardMeta/PostCardMeta";
 // import PostFeaturedMedia from "components/PostFeaturedMedia/PostFeaturedMedia";
 import PostFeaturedMedia from "components/PostFeaturedMedia/MyPostFeaturedMedia";
 import Link from "components/Link";
@@ -23,17 +21,18 @@ const Card11: FC<Card11Props> = ({
   hiddenAuthor = false,
   ratio = "aspect-w-4 aspect-h-3",
 }) => {
-  const { title, href, date, categories } = post;
+  const { title, href, categories, date } = post;
 
   const [isHover, setIsHover] = useState(false);
 
-  // console.log(post[0])
+  // console.log(post);
 
   return (
     <div
       className={`nc-Card11 relative flex flex-col group rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 ${className}`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
+      //
     >
       <div
         className={`block flex-shrink-0 relative w-full rounded-t-3xl overflow-hidden z-10 ${ratio}`}
@@ -42,15 +41,22 @@ const Card11: FC<Card11Props> = ({
           <PostFeaturedMedia post={post} isHover={isHover} />
         </div>
       </div>
-      {/*article blocks link */}
       <Link href={href} className="absolute inset-0"></Link>
       <span className="absolute top-3 inset-x-3 z-10">
-        <CategoryBadgeList categories={categories || []} />
+        <CategoryBadgeList categories={categories} />
       </span>
 
       <div className="p-4 flex flex-col space-y-3">
         {!hiddenAuthor ? (
-          <PostCardMeta meta={post} />
+          <PostCardMeta
+            meta={{
+              ...post,
+              author: post.author || {
+                displayName: "Unknown author",
+                href: "#",
+              },
+            }}
+          />
         ) : (
           <span className="text-xs text-neutral-500">{date}</span>
         )}

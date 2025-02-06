@@ -24,7 +24,8 @@ const Card11: FC<Card11Props> = ({
 
   const [isHover, setIsHover] = useState(false);
 
-  console.log(post);
+  // console.log(post);
+
   return (
     <div
       className={`nc-Card11 relative flex flex-col group rounded-3xl overflow-hidden bg-white dark:bg-neutral-900 ${className}`}
@@ -46,7 +47,15 @@ const Card11: FC<Card11Props> = ({
 
       <div className="p-4 flex flex-col space-y-3">
         {!hiddenAuthor ? (
-          <PostCardMeta meta={post} />
+          <PostCardMeta
+            meta={{
+              ...post,
+              author: post.author || {
+                displayName: "Unknown author",
+                href: "#",
+              },
+            }}
+          />
         ) : (
           <span className="text-xs text-neutral-500">{date}</span>
         )}

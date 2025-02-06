@@ -25,6 +25,7 @@ import Image from "components/Image/Image";
 import { useLocation } from "react-router-dom";
 import { fetchApi } from "api/MainApiFetch";
 import qs from "qs";
+import { LOCALHOST } from "../../constants";
 
 const TABS = ["Articles", "Favorites", "Saved"];
 
@@ -84,35 +85,48 @@ const PageAuthorMacAlex = () => {
 
         const response = await fetchApi("/authors?", query);
 
-        // update author's data
-        const authorData = response.data[0];
-        if (authorData) {
-          // set proper avatar url
-          const authorAvatarUrl = authorData.avatar?.url
-            ? process.env.REACT_APP_STRAPI_HOST_URL + authorData.avatar.url
+        const updatedAuthors = response.data.map((author: any) => {
+          const updatedAvatar = author.avatar?.url
+            ? `${process.env.REACT_APP_STRAPI_HOST_URL}${author.avatar.url}`
             : "";
 
-          const updatedAuthor = {
-            ...authorData,
-            avatar: authorAvatarUrl,
-          };
-
-          setAuthor(updatedAuthor);
-
-          const updatedPosts = authorData.articles.map((article: any) => {
-            const updateCategories = article.categories.map((cat: any) => ({
+          const updatedArticles = author.articles.map((article: any) => {
+            const updatedCategories = article.categories.map((cat: any) => ({
               ...cat,
               href: `/category/${cat.slug}`,
             }));
 
+            const updatedAuthor = article.author
+              ? {
+                  firstName: article.author.firstName,
+                  lastName: article.author.lastName,
+                  displayName: article.author.displayName,
+                  avatar: article.author.avatar
+                    ? `${LOCALHOST}${article.author.avatar.url}`
+                    : undefined,
+                  href: `/author-1/${article.author.slug}`,
+                }
+              : null;
+
             return {
               ...article,
-              categories: updateCategories,
+              author: updatedAuthor,
+              categories: updatedCategories,
               href: `/article-1/${article.slug}`,
             };
           });
 
-          setPosts(updatedPosts);
+          return {
+            ...author,
+            avatar: updatedAvatar,
+            articles: updatedArticles,
+          };
+        });
+
+        if (updatedAuthors.length > 0) {
+          const [author] = updatedAuthors;
+          setAuthor(author);
+          setPosts(author.articles);
         }
       } catch (error) {
         console.error("Error when loading authors:", error);

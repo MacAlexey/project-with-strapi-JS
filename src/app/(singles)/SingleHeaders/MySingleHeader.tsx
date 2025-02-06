@@ -18,7 +18,7 @@ const SingleHeader: FC<SingleHeaderProps> = ({
   className = "",
   article,
 }) => {
-  const { categories, title } = article || {};
+  const { categories, title, description } = article || {};
 
   return (
     <>
@@ -27,11 +27,11 @@ const SingleHeader: FC<SingleHeaderProps> = ({
           <CategoryBadgeList itemClass="!px-3" categories={categories || []} />
           <SingleTitle
             mainClass={titleMainClass}
-            title={title || "some other title"}
+            title={title || "Default title"}
           />
           {!hiddenDesc && (
             <span className="block text-base text-neutral-500 md:text-lg dark:text-neutral-400 pb-1">
-              some description :)
+              {description}
             </span>
           )}
           <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>

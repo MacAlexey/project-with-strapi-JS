@@ -5,7 +5,8 @@ import Card7 from "components/Card7/Card7";
 import { PostDataType } from "data/types";
 import Card9 from "components/Card9/Card9";
 import Card10 from "components/Card10/Card10";
-import Card11 from "components/Card11/Card11";
+// import Card11 from "components/Card11/Card11";
+import Card11 from "components/Card11/MyCard11";
 import Card10V2 from "components/Card10/Card10V2";
 import MySlider from "components/MySlider";
 

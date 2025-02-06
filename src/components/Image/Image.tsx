@@ -1,3 +1,4 @@
+import { DEFAULT_PHOTO } from "../../constants";
 import React, { CSSProperties, FC } from "react";
 
 interface Props extends Partial<Omit<HTMLImageElement, "style">> {
@@ -9,7 +10,7 @@ interface Props extends Partial<Omit<HTMLImageElement, "style">> {
 const Image: FC<Props> = ({
   fill = false,
   className,
-  alt = "",
+  alt = DEFAULT_PHOTO,
   style,
   onLoadingComplete,
   ...args

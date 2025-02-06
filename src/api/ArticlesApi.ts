@@ -43,14 +43,17 @@ export const fetchArticle = async (): Promise<PostDataType[]> => {
               : undefined,
             href: `/author-1/${article.author.slug}`,
           }
-        : null;
+        : undefined;
 
       return {
         ...article,
         author: updatedAuthor,
         categories: updatedCategory,
         href: `/article-1/${article.slug}`,
-        featuredImage: `${LOCALHOST}${article.featuredImage?.url}`,
+
+        featuredImage: article.featuredImage?.url
+          ? `${LOCALHOST}${article.featuredImage?.url}`
+          : undefined,
       };
     });
 

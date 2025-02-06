@@ -27,12 +27,12 @@ const PostCardMeta: FC<PostCardMetaProps> = ({
           <Avatar
             radius="rounded-full"
             sizeClass={avatarSize}
-            imgUrl={author.avatar}
-            userName={author.displayName}
+            imgUrl={author?.avatar}
+            userName={author?.displayName}
           />
         )}
         <span className="block text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white font-medium">
-          {author.displayName}
+          {author?.displayName}
         </span>
       </Link>
       <>

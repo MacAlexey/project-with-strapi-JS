@@ -6,6 +6,7 @@ import PostTypeFeaturedIcon from "components/PostTypeFeaturedIcon/PostTypeFeatur
 import MediaAudio from "./MediaAudio";
 import Link from "components/Link";
 import Image from "components/Image/Image";
+import { DEFAULT_PHOTO } from "../../constants";
 
 export interface PostFeaturedMediaProps {
   className?: string;
@@ -24,19 +25,19 @@ const PostFeaturedMedia: FC<PostFeaturedMediaProps> = ({
   const isPostMedia = () => postType === "video" || postType === "audio";
 
   //Mine
-  const featuredImagerUrl =
-    typeof featuredImage === "object" &&
-    featuredImage !== null &&
-    "url" in featuredImage
-      ? (featuredImage as { url: string }).url.startsWith("/uploads")
-        ? `${process.env.REACT_APP_STRAPI_HOST_URL}${
-            (featuredImage as { url: string }).url
-          }`
-        : (featuredImage as { url: string }).url
-      : typeof featuredImage === "string" &&
-        featuredImage.startsWith("/uploads")
-      ? `${process.env.REACT_APP_STRAPI_HOST_URL}${featuredImage}`
-      : "there is no photo"; //default settings
+  // const featuredImagerUrl =
+  //   typeof featuredImage === "object" &&
+  //   featuredImage !== null &&
+  //   "url" in featuredImage
+  //     ? (featuredImage as { url: string }).url.startsWith("/uploads")
+  //       ? `${process.env.REACT_APP_STRAPI_HOST_URL}${
+  //           (featuredImage as { url: string }).url
+  //         }`
+  //       : (featuredImage as { url: string }).url
+  //     : typeof featuredImage === "string" &&
+  //       featuredImage.startsWith("/uploads")
+  //     ? `${process.env.REACT_APP_STRAPI_HOST_URL}${featuredImage}`
+  //     : "there is no photo"; //default settings
 
   const renderGallerySlider = () => {
     if (!galleryImgs) return null;
@@ -86,7 +87,7 @@ const PostFeaturedMedia: FC<PostFeaturedMediaProps> = ({
           alt="featured"
           fill
           className="object-cover"
-          src={featuredImagerUrl}
+          src={featuredImage || DEFAULT_PHOTO}
           sizes="(max-width: 600px) 480px, 800px"
         />
       )}
